@@ -106,12 +106,12 @@ if __name__ == "__main__":
     if InPlace:
         GitRoot = getGitRoot()
         for FileName in EditedFiles:
-            if isFormattable(FileName):
+            if FileName != '' and isFormattable(FileName):
                 formatFile(FileName,GitRoot)
         sys.exit(ReturnCode)
 
     for FileName in EditedFiles:
-        if not isFormattable(FileName):
+        if FileNAme == '' or not isFormattable(FileName):
             continue
         if requiresFormat(FileName):
             print("'" + FileName +
