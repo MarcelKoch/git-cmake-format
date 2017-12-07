@@ -111,7 +111,7 @@ if __name__ == "__main__":
         sys.exit(ReturnCode)
 
     for FileName in EditedFiles:
-        if FileNAme == '' or not isFormattable(FileName):
+        if FileName == '' or not isFormattable(FileName):
             continue
         if requiresFormat(FileName):
             print("'" + FileName +
