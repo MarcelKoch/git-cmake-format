@@ -42,9 +42,8 @@ def isFormattable(File):
     for Dir in IgnoreList:
         if '' != Dir and '' != os.path.commonprefix([os.path.relpath(File), os.path.relpath(Dir)]):
             return False
-    Extension = os.path.splitext(File)[1]
-    for Ext in ['.h', '.cpp', '.hpp', '.c', '.cc', '.hh', '.cxx', '.hxx', '.cu', '.cuh']:
-        if Ext == Extension:
+    for Ext in ['.h', '.cpp', '.hpp', '.c', '.cc', '.hh', '.cxx', '.hxx', '.cu', '.cuh', '.hpp.inc']:
+        if File.endswith(Ext):
             return True
     return False
 
