@@ -118,7 +118,4 @@ if __name__ == "__main__":
                   "' must be formatted, run the cmake target 'format'")
             ReturnCode = 1
 
-    if 1 == ReturnCode:
-        subprocess.Popen([Git, "reset", "HEAD", "--", "."])
-
     sys.exit(ReturnCode)
