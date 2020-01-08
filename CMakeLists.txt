@@ -5,7 +5,6 @@ find_package(Git REQUIRED)
 find_package(PythonInterp REQUIRED)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
-find_package(ClangFormat REQUIRED)
 
 set(GCF_CLANGFORMAT_STYLE "file" CACHE STRING
     "Parameter pass to clang-format -style=<here>")
@@ -15,9 +14,7 @@ set(GCF_CLANGFORMAT_MINIMAL_VERSION "0.0.0" CACHE STRING
     "The minimal required version of clang-format")
 set(GCF_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/git-cmake-format.py)
 
-if("${CLANG_FORMAT_VERSION}" VERSION_LESS "${GCF_CLANGFORMAT_MINIMAL_VERSION}")
-  message(FATAL_ERROR "clang-format version is ${CLANG_FORMAT_VERSION} less than minimal requirement ${GCF_CLANGFORMAT_MINIMAL_VERSION}")
-endif()
+find_package(ClangFormat ${GCF_CLANGFORMAT_MINIMAL_VERSION} REQUIRED)
 
 execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --show-toplevel
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
