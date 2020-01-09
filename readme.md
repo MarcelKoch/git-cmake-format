@@ -46,6 +46,7 @@ depends upon using the following CMake variables.
 * `GCF_GIT_PATH:STRING=/path/to/git`
 * `GCF_PYTHON_PATH:STRING=/path/to/python`
 * `GCF_CLANGFORMAT_PATH:STRING=/path/to/clang-format` defaults to `clang-format`
+* `GCF_CLANGFORMAT_MINIMAL_VERION:STRING=minimal_version` defaults to `0.0.0`
 
 It is also possible to set the `-style=` command line argument for
 `clang-format` with the following options, the default is `file`
