@@ -32,7 +32,7 @@ else()
   add_custom_target(format
     ${PYTHON_EXECUTABLE} ${GCF_SCRIPT}
     --cmake ${GIT_EXECUTABLE}
-    ${CLANG_FORMAT_EXECUTABLE} -style=${GCF_CLANGFORMAT_STYLE}
+    ${ClangFormat_EXECUTABLE} -style=${GCF_CLANGFORMAT_STYLE}
     -ignore=${GCF_IGNORE_LIST}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
   unset(GCF_SCRIPT)
