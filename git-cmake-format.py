@@ -57,7 +57,7 @@ def requiresFormat(FileName):
     GitShowRet = subprocess.Popen([Git, "show", ":" + FileName],
             stdout=subprocess.PIPE)
     ClangFormatRet = subprocess.Popen(
-            [ClangFormat, Style], stdin=GitShowRet.stdout, stdout=subprocess.PIPE)
+            [ClangFormat, Style, '--assume-filename=' + FileName], stdin=GitShowRet.stdout, stdout=subprocess.PIPE)
     FormattedContent = ClangFormatRet.stdout.read()
 
 
