@@ -16,7 +16,7 @@ set(GCF_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/git-cmake-format.py)
 
 find_package(ClangFormat ${GCF_CLANGFORMAT_MINIMAL_VERSION} REQUIRED)
 
-execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --show-toplevel
+execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --absolute-git-dir
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   OUTPUT_VARIABLE GCF_GIT_ROOT
   OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -25,7 +25,7 @@ if(NOT GCF_GIT_ROOT)
 else()
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/git-pre-commit-hook
-    ${GCF_GIT_ROOT}/.git/hooks/pre-commit
+    ${GCF_GIT_ROOT}/hooks/pre-commit
     @ONLY)
   unset(GCF_GIT_ROOT)
 
