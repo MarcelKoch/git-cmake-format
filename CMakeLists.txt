@@ -23,6 +23,11 @@ execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --absolute-git-dir
 if(NOT GCF_GIT_ROOT)
   message(WARNING "Not in a git repository")
 else()
+  set(GCF_SCRIPT_GIT_DIR ${GCF_GIT_ROOT}/hooks/git-cmake-format.py)
+  configure_file(
+    ${GCF_SCRIPT} ${GCF_SCRIPT_GIT_DIR}
+    COPYONLY)
+
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/git-pre-commit-hook
     ${GCF_GIT_ROOT}/hooks/pre-commit
@@ -30,10 +35,11 @@ else()
   unset(GCF_GIT_ROOT)
 
   add_custom_target(format
-    ${PYTHON_EXECUTABLE} ${GCF_SCRIPT}
+    ${PYTHON_EXECUTABLE} ${GCF_SCRIPT_GIT_DIR}
     --cmake ${GIT_EXECUTABLE}
     ${ClangFormat_EXECUTABLE} -style=${GCF_CLANGFORMAT_STYLE}
     -ignore=${GCF_IGNORE_LIST}
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
   unset(GCF_SCRIPT)
+  unset(GCF_SCRIPT_GIT_DIR)
 endif()
