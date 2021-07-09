@@ -1,7 +1,7 @@
 #!/bin/bash
 
 "@PYTHON_EXECUTABLE@" \
-	"@GCF_SCRIPT@" \
+	"@GCF_GIT_DIR_SCRIPT@" \
 	"--pre-commit" \
 	"@GIT_EXECUTABLE@" \
 	"@ClangFormat_EXECUTABLE@" \
