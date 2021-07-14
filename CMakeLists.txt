@@ -28,7 +28,7 @@ if(NOT GCF_GIT_HOOKS_DIR)
 else()
   set(GCF_GIT_DIR_SCRIPT ${GCF_GIT_HOOKS_DIR}/git-cmake-format.py)
   if((NOT GCF_FORCE_OVERWRITE) AND (EXISTS ${GCF_GIT_HOOKS_DIR}/pre-commit))
-    message(STATUS "custom hook or git-cmake-format.py already installed, skipping it (overwrite with GCF_FORCE_OVERWRITE=ON)")
+    message(STATUS "custom hook is already installed, skipping it (overwrite with GCF_FORCE_OVERWRITE=ON)")
   else()
     message(STATUS "Installing git-cmake-format.py and pre-commit hook into ${GCF_GIT_HOOKS_DIR}")
 
