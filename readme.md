@@ -52,3 +52,10 @@ It is also possible to set the `-style=` command line argument for
 `clang-format` with the following options, the default is `file`
 
 * `GCF_CLANGFORMAT_STYLE:STRING=WebKit`
+
+By default, the hook and script are not installed if a custom hook or the 
+script is already present. This behavior can be changed by setting
+
+* `GCF_FORCE_OVERWRITE:BOOL` default `OFF`
+
+to `ON`.
