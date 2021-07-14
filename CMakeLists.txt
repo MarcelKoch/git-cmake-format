@@ -12,28 +12,37 @@ set(GCF_IGNORE_LIST "" CACHE STRING
     "Semi colon separated list of directories to ignore")
 set(GCF_CLANGFORMAT_MINIMAL_VERSION "0.0.0" CACHE STRING
     "The minimal required version of clang-format")
+set(GCF_FORCE_OVERWRITE OFF CACHE BOOL
+    "If true, always overwrite pre-commit hook and script")
 set(GCF_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/git-cmake-format.py)
 
 find_package(ClangFormat ${GCF_CLANGFORMAT_MINIMAL_VERSION} REQUIRED)
 
-execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --absolute-git-dir
+execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --git-path hooks
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  OUTPUT_VARIABLE GCF_GIT_ROOT
+  OUTPUT_VARIABLE GCF_GIT_HOOKS_DIR
   OUTPUT_STRIP_TRAILING_WHITESPACE)
-if(NOT GCF_GIT_ROOT)
+get_filename_component(GCF_GIT_HOOKS_DIR ${GCF_GIT_HOOKS_DIR} REALPATH BASE_DIR ${CMAKE_SOURCE_DIR})
+if(NOT GCF_GIT_HOOKS_DIR)
   message(WARNING "Not in a git repository")
 else()
-  set(GCF_GIT_DIR_SCRIPT ${GCF_GIT_ROOT}/hooks/git-cmake-format.py)
-  configure_file(
-    ${GCF_SCRIPT} ${GCF_GIT_DIR_SCRIPT}
-    COPYONLY)
-  unset(GCF_SCRIPT)
+  set(GCF_GIT_DIR_SCRIPT ${GCF_GIT_HOOKS_DIR}/git-cmake-format.py)
+  if((NOT GCF_FORCE_OVERWRITE) OR (EXISTS ${GCF_GIT_DIR_SCRIPT}) OR (EXISTS ${GCF_GIT_HOOKS_DIR}/pre-commit))
+    message(STATUS "custom hook or git-cmake-format.py already installed, skipping it (overwrite with GCF_FORCE_OVERWRITE=ON)")
+  else()
+    message(STATUS "Installing git-cmake-format.py and pre-commit hook into ${GCF_GIT_HOOKS_DIR}")
 
-  configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/git-pre-commit-hook
-    ${GCF_GIT_ROOT}/hooks/pre-commit
-    @ONLY)
-  unset(GCF_GIT_ROOT)
+    configure_file(
+      ${GCF_SCRIPT} ${GCF_GIT_DIR_SCRIPT}
+      COPYONLY)
+
+    configure_file(
+      ${CMAKE_CURRENT_SOURCE_DIR}/git-pre-commit-hook
+      ${GCF_GIT_HOOKS_DIR}/pre-commit
+      @ONLY)
+  endif()
+  unset(GCF_SCRIPT)
+  unset(GCF_GIT_HOOKS_DIR)
 
   add_custom_target(format
     ${PYTHON_EXECUTABLE} ${GCF_GIT_DIR_SCRIPT}
