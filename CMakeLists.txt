@@ -22,10 +22,14 @@ execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --git-path hooks
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   OUTPUT_VARIABLE GCF_GIT_HOOKS_DIR
   OUTPUT_STRIP_TRAILING_WHITESPACE)
-get_filename_component(GCF_GIT_HOOKS_DIR ${GCF_GIT_HOOKS_DIR} REALPATH BASE_DIR ${CMAKE_SOURCE_DIR})
+
+# If it is not in git, give an error and return
 if(NOT GCF_GIT_HOOKS_DIR)
   message(WARNING "Not in a git repository")
-else()
+  return()
+endif()
+get_filename_component(GCF_GIT_HOOKS_DIR ${GCF_GIT_HOOKS_DIR} REALPATH BASE_DIR ${CMAKE_SOURCE_DIR})
+if(EXISTS "${GCF_GIT_HOOKS_DIR}")
   set(GCF_GIT_DIR_SCRIPT ${GCF_GIT_HOOKS_DIR}/git-cmake-format.py)
   if((NOT GCF_FORCE_OVERWRITE) AND (EXISTS ${GCF_GIT_HOOKS_DIR}/pre-commit))
     message(STATUS "custom hook is already installed, skipping it (overwrite with GCF_FORCE_OVERWRITE=ON)")
