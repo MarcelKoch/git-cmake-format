@@ -31,7 +31,11 @@
 #    endif()
 
 find_program(ClangFormat_EXECUTABLE
-  NAMES clang-format clang-format-5.0
+  NAMES clang-format clang-format-13 
+        clang-format-12 clang-format-11 
+        clang-format-10 clang-format-9 
+        clang-format-8 clang-format-7 
+        clang-format-6.0 clang-format-5.0
         clang-format-4.0 clang-format-3.9
         clang-format-3.8 clang-format-3.7
         clang-format-3.6 clang-format-3.5
