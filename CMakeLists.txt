@@ -10,8 +10,10 @@ set(GCF_CLANGFORMAT_STYLE "file" CACHE STRING
     "Parameter pass to clang-format -style=<here>")
 set(GCF_IGNORE_LIST "" CACHE STRING
     "Semi colon separated list of directories to ignore")
-set(GCF_CLANGFORMAT_MINIMAL_VERSION "0.0.0" CACHE STRING
-    "The minimal required version of clang-format")
+set(GCF_CLANGFORMAT_USER_EXECUTABLE "" CACHE STRING
+    "Absolute path to user defined clang-format executable")
+set(GCF_CLANGFORMAT_MINIMAL_VERSION "9.0.0" CACHE STRING
+    "The minimal required version of clang-format, might be necessary to set to 0.0.0 if your clang-format is not found")
 set(GCF_FORCE_OVERWRITE OFF CACHE BOOL
     "If true, always overwrite pre-commit hook and script")
 set(GCF_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/git-cmake-format.py)
